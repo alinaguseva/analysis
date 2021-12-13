@@ -1,0 +1,44 @@
+import java.io.File
+import java.util.*
+
+fun main(){
+
+    val text = File("text.txt")
+    val sc = Scanner(text)
+    val sc1 = Scanner(System.`in`)
+    val line = sc.nextLine()
+
+
+    val wordlist = line.split(" ", ",", ".", "!", "?", "(", ")", "№", "#", ";", ":", "*", "/", "–", "-", "—", "+", "=", "«", "»", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+
+    var map = sortedMapOf<String, Int>()
+    for (i in wordlist) {
+        if (i != "") {
+            if (i in map.keys) {
+                map[i] = map[i]?.plus(1) ?: 0
+            } else {
+                map[i] = 1
+            }
+        }
+        else {}
+    }
+
+    var max = ""
+    var c1 = 0
+    var c2 = 0
+    var summa = 0
+
+    for ((key, value) in map) {
+        if (value > c1) {
+            max = key
+            c1 = value
+        }
+        summa += value
+        if (value == 1) c2 += 1
+    }
+
+    println("Определили самое часто встречающееся слово: \"$max\" ")
+    println("Оно встречается $c1 раз")
+    println("Определили долю слов, которые встречаются только один раз: ${c2/summa.toDouble()}")
+    println("Всего слов: ${map}")
+}
